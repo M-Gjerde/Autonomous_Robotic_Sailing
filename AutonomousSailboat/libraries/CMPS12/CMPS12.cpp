@@ -83,6 +83,7 @@ void CMPS12::updateMeasure(){
 	rot[1]= roty;
 	rot[2]= rotz;
 
+
 	heading = angles[0];
 }
 

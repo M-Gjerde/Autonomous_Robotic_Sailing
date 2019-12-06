@@ -1,7 +1,7 @@
 #ifndef SAILBOAT_ALL_CONFIG_H
 #define SAILBOAT_ALL_CONFIG_H
 //Choose the boat here
-#define SAILBOAT_PRO
+#define SAILBOAT_BOATLETTE
 #define VERSION_ARDUINO "2.0"
 
 #ifdef SAILBOAT_PRO
@@ -23,6 +23,10 @@
 #ifdef SAILBOAT_TRIMARAN
 #pragma message("SAILBOAT_TRIMARAN chosen")
 #include <config-Trimaran.h>
+#endif
+#ifdef SAILBOAT_BOATLETTE
+#pragma message("SAILBOAT_BOATLETTE chosen")
+#include <config-Boatlette.h>
 #endif
 
 #include <config-RC.h>

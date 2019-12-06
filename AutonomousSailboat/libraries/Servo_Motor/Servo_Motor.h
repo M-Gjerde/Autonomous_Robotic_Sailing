@@ -19,7 +19,7 @@ class Servo_Motor : public ActuatorROS{
 		#ifdef SERVO_SHIELD
 		void setMotor(Adafruit_PWMServoDriver* motor_ptr){motor = motor_ptr;}
 		#endif
-
+		//int motorTimer = 0;
 		void init(ros::NodeHandle* n);
 		void applyCommand(double command);
 		void communicateData();
@@ -37,7 +37,20 @@ class Servo_Motor : public ActuatorROS{
 
 		void motorWrite(unsigned int us){
 			#ifdef SERVO_SHIELD
-			motor->setPWM(pin,0,us); // Equation to match arduino servo
+  		//	if(millis() > motorTimer & pin == 1 ){
+				motor->setPWM(pin,0,us); // Equation to match arduino servo
+		/*		motorTimer = millis() + 1500;
+			}
+			else if (pin == 0)
+			{
+			motor->setPWM(pin,0,us);
+			}
+*/
+			Serial.print("pin ");
+			Serial.println(pin);
+			Serial.print("us ");
+			Serial.println(us);
+
 			#else
 			motor.writeMicroseconds(1.125*us-50); // Equation to match servo shield
 			#endif
@@ -55,7 +68,10 @@ class Servo_Motor : public ActuatorROS{
 		unsigned int pwmNeutral;
 		unsigned int pwmMin;
 		unsigned int pwmMax;
-		unsigned int lastPwm;
+		//Original code
+		//unsigned int lastPwm;
+
+		float lastPwm;
 		float anglemin;
 		float anglemax;
 };

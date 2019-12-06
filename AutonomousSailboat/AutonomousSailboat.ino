@@ -85,7 +85,7 @@ void setRCInterrupts() {
 
 ISR(WDT_vect)
 {
-  EEPROM.write(1000,120);
+  EEPROM.write(1000, 120);
 }
 
 void watchdogSetup(void)
@@ -93,21 +93,21 @@ void watchdogSetup(void)
   cli(); // disable all interrupts
   wdt_reset(); // reset the WDT timer
   // Enter Watchdog Configuration mode:
-  WDTCSR |= (1<<WDCE) | (1<<WDE);
+  WDTCSR |= (1 << WDCE) | (1 << WDE);
   // Set Watchdog settings:
-  WDTCSR = (1<<WDIE) | (1<<WDE) | (1<<WDP3) | (0<<WDP2) | (0<<WDP1) | (0<<WDP0);
+  WDTCSR = (1 << WDIE) | (1 << WDE) | (1 << WDP3) | (0 << WDP2) | (0 << WDP1) | (0 << WDP0);
   sei();
 }
 
 bool checkIfColdStart() {
   /*if (strcmp (p, signature) == 0) { // signature is in RAM this was reset
     return false;
-  }
-  else {  // signature not in RAM this was a power on
+    }
+    else {  // signature not in RAM this was a power on
     // add the signature to be retained in memory during reset
     memcpy (p, signature, sizeof signature);  // copy signature into RAM
     return true;
-  }*/
+    }*/
   return (EEPROM.read(1000) == 0);
 }
 
@@ -121,7 +121,7 @@ void setup() {
 
   Sailboat::Instance()->init(&nh);
   delay(100);
-  
+
   setControllers();
   setRCInterrupts();
 
@@ -131,14 +131,14 @@ void setup() {
 
   delay(10);
 
-  if(checkIfColdStart()){
+  if (checkIfColdStart()) {
     //Clearing EEPROM is too long, clearing only a part
     for (int i = 0 ; i < 512; ++i)
       EEPROM.write(i, 0);
-    EEPROM.write(1000,0);
+    EEPROM.write(1000, 0);
     Sailboat::Instance()->getGPS()->informCold();
   }
-  else{
+  else {
     Sailboat::Instance()->setController(RETURNHOME_CONTROLLER);
     EEPROM.write(1000, 0);
   }
@@ -148,6 +148,7 @@ void setup() {
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
   //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
+  //GPS* gps = Sailboat::Instance()->getGPS();
 }
 
 void loop() {
@@ -159,7 +160,6 @@ void loop() {
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
   
-    
   nh.spinOnce();
   delay(4);
 }

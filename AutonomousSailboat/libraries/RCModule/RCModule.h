@@ -4,12 +4,14 @@
 #include <SensorsInterface.h>
 #include <Helper.h>
 
+
 class RC : public Sensor{
 public:
 	RC() : controlling(false), timer(0), previousController(RETURNHOME_CONTROLLER){
 		for(int i = 0; i < 6; ++i){
 			rc_values[i] = 0; rc_start[i] = 0;
 		}
+		
 		offsetmin[RC_1] = RC_1_MIN;
 		offsetmax[RC_1] = RC_1_MAX;
 		offsetmin[RC_2] = RC_2_MIN;
@@ -22,6 +24,20 @@ public:
 		offsetmax[RC_5] = RC_5_MAX;
 		offsetmin[RC_6] = RC_6_MIN;
 		offsetmax[RC_6] = RC_6_MAX;
+		
+		/* 
+		offsetmin[RC_1] = 2001;
+		offsetmax[RC_1] = 911;
+		offsetmin[RC_2] = 983;
+		offsetmax[RC_2] = 1999;
+		offsetmin[RC_3] = 983;
+		offsetmax[RC_3] = 2001;
+		offsetmin[RC_4] = RC_4_MIN;
+		offsetmax[RC_4] = RC_4_MAX;
+		offsetmin[RC_5] = RC_5_MIN;
+		offsetmax[RC_5] = RC_5_MAX;
+		offsetmin[RC_6] = RC_6_MIN;
+		offsetmax[RC_6] = RC_6_MAX;*/
 		}
 		
 	void init(){
