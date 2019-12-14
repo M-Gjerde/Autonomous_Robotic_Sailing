@@ -8,7 +8,7 @@
 
 class BNO055 : public IMU{
 	public:
-		BNO055(uint8_t address = 0x60) : IMU("IMU", 10, 10), address(address){}
+		BNO055(uint8_t address = 0x28) : IMU("IMU", 10, 10), address(address){}
 
 		void init(ros::NodeHandle* n);
 		void updateMeasure();

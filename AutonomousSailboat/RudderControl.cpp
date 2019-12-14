@@ -21,7 +21,6 @@ void RudderControl::Control(const geometry_msgs::Twist& cmd) {
 #endif
   double sail = 0;
   WindSensor* wind = Sailboat::Instance()->getWindSensor();
-
   double theta = imu->getHeading();
   double cap = theta-asin(cmd.angular.x/(RUDDER_MAX*DEG_TO_RAD));
 

@@ -3,7 +3,9 @@
 
 #include <config-Sailboat.h>
 
-#ifdef USE_ARDUINO_WIND
+#if defined(USE_ARDUINO_WIND)
+#include <WindSensor.h>
+#elif defined(CUSTOM_WIND_VANE)
 #include <WindSensor.h>
 #else
 #include <WindSensorSubscriber.h>
@@ -17,6 +19,7 @@
 
 #include <XSens.h>
 #include <CMPS12.h>
+#include <JY901IMU.h>
 #include <BNO055.h>
 #include <BatterySensor.h>
 

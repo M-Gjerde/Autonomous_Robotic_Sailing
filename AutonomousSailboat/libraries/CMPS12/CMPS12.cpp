@@ -83,8 +83,27 @@ void CMPS12::updateMeasure(){
 	rot[1]= roty;
 	rot[2]= rotz;
 
-
 	heading = angles[0];
+}
+
+void CMPS12::storeCalibration(){
+	uint8_t data[2];
+	data[0] = 0x00;
+	data[1] = 0xF0;
+	Wire.beginTransmission(address);
+	Wire.write((char*)data,2);
+	Wire.endTransmission();
+	delay(20);
+	data[1] = 0xF5;
+	Wire.beginTransmission(address);
+	Wire.write((char*)data,2);
+	Wire.endTransmission();
+	delay(20);
+	data[1] = 0xF6;
+	Wire.beginTransmission(address);
+	Wire.write((char*)data,2);
+	Wire.endTransmission();
+	delay(20);
 }
 
 void CMPS12::updateTest(){

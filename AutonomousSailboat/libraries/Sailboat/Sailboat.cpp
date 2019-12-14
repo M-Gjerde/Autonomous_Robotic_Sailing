@@ -89,11 +89,17 @@ void Sailboat::init(ros::NodeHandle* n){
     Wire.begin();
 
 #ifdef USE_ARDUINO_WIND
-#pragma message("Using Wind Sensor on Arduino")
-    sensors[SENSOR_WINDSENSOR] = new WindSensor();
+	Serial.println("Using default wind sensor");
+	#pragma message("Using Wind Sensor on Arduino")
+	sensors[SENSOR_WINDSENSOR] = new WindSensor();
+#elif defined(CUSTOM_WIND_VANE)
+	Serial.println("using custom wind vane");
+	#pragma message("Using Custom Wind Vane on Arduino")
+	sensors[SENSOR_WINDSENSOR] = new WindSensor();
 #else
-#pragma message("Attach Wind Sensor on RPI")
-    sensors[SENSOR_WINDSENSOR] = new WindSensor();
+	Serial.println("using third option");
+	#pragma message("Attach Wind Sensor on RPI")
+	sensors[SENSOR_WINDSENSOR] = new WindSensor();
 #endif
 
 #ifdef USE_ARDUINO_GPS
@@ -115,6 +121,9 @@ void Sailboat::init(ros::NodeHandle* n){
 #elif defined(CMPS12_IMU)
 	#pragma message("CMPS12 is used as IMU")
 	sensors[SENSOR_IMU] = new CMPS12();
+#elif defined(JY901_IMU)
+	#pragma message("JY901 is used as IMU")
+	sensors[SENSOR_IMU] = new JY901IMU();
 #elif defined(BNO055_IMU)
 	#pragma message("BNO055 is used as IMU")
 	sensors[SENSOR_IMU] = new BNO055();
@@ -129,12 +138,10 @@ void Sailboat::init(ros::NodeHandle* n){
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER])->setMotor(servo_motors_pwm);
     actuators[ACTUATOR_SAIL] = new Servo_Motor(WINCH_SERVO,WINCH_ANGLE_NEUTRAL,WINCH_ANGLE_MAX, WINCH_ANGLE_MIN,SAIL_MIN,SAIL_MAX,"sail");
 	((Servo_Motor*)actuators[ACTUATOR_SAIL])->setMotor(servo_motors_pwm);
-/*
 #ifdef ACTUATOR_RUDDER2
     actuators[ACTUATOR_RUDDER2] = new Servo_Motor(RUDDER2_SERVO, RUDDER2_POS_NEUTRAL, RUDDER2_POS_MAX, RUDDER2_POS_MIN, RUDDER2_MIN,RUDDER2_MAX,"rudder2");
 	((Servo_Motor*)actuators[ACTUATOR_RUDDER2])->setMotor(servo_motors_pwm);
 #endif
-*/
 #else
 	#pragma message("Custom interface board is used")
     actuators[ACTUATOR_RUDDER] = new Servo_Motor(RUDDER_PIN,RUDDER_POS_NEUTRAL,RUDDER_POS_MAX,RUDDER_POS_MIN,RUDDER_MIN,RUDDER_MAX,"rudder");
@@ -144,8 +151,9 @@ void Sailboat::init(ros::NodeHandle* n){
 #endif
 #endif
 
-    for(int i = 0; i < NB_SENSORS; ++i)
+    for(int i = 0; i < NB_SENSORS; ++i){
         sensors[i]->init(n);
+    }
 
     for(int i = 0; i < NB_ACTUATORS; ++i)
         actuators[i]->init(n);
@@ -199,36 +207,6 @@ void Sailboat::communicateData(){
 
 
 void Sailboat::Control(){
-
-	if(millis() - timerMillis > 100){
-		setController(RC_CONTROLLER);
-
-			
-		controller->ControlTime(cmd);
-		watchdog = millis();
-
-	//Serial.print("watchdog: ");
-	//Serial.println(watchdog);
-
-		if(LOGGER)
-			Logger::Instance()->Toast("ROS DEAD??", "ROS DEAD??", 0);
-		    
-
-
-		for(int i =0; i < NB_CONTROLLERS; ++i){
-		    if(controllers[i] != NULL && !controllers[i]->isActivated()){
-			controllers[i]->updateBackground();
-		    }
-
-		}
-
-
-	}
-//Serial.print("watchdogROS: ");
-//Serial.println(watchdogROS);
-
-
-/*
     if(millis() - timerMillis > 100){
         if(controller != nullptr){
             controller->ControlTime(cmd);
@@ -252,6 +230,4 @@ void Sailboat::Control(){
             }
         }
     }
-*/
-
 }

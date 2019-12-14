@@ -2,7 +2,8 @@
 #include    <stdlib.h>
 
 void WindSensor::init(ros::NodeHandle* n){
-	SensorROS::init(n);
+	Serial.println("ENDING HERE THO");
+	//SensorROS::init(n);
 	nh = n;
 	n->subscribe(subWind);
 	//n->advertise(pub);

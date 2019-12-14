@@ -4,11 +4,26 @@
 #include <Adafruit_Sensor.h>
 #include <utility/imumaths.h>
 
+/* Set the delay between fresh samples */
+#define BNO055_SAMPLERATE_DELAY_MS (100)
 
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
 
 void BNO055::init(ros::NodeHandle* n){
+	if(!bno.begin())
+	  {
+	    /* There was a problem detecting the BNO055 ... check your connections */
+	    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+	    while(1);
+	  } else 
+	{
+	Serial.println("IMU BNO055 has been detected");	
 	IMU::init(n);
+	}
+
+
+
+	
 }
 
 void BNO055::updateMeasure(){
@@ -22,6 +37,18 @@ void BNO055::updateMeasure(){
 	int yaw = euler.x();
 	int pitch = euler.y();
 	int roll = euler.z();
+
+	/*
+	Serial.println("BNO IMU x-rot: "+String(yaw));
+	Serial.println("BNO IMU y-rot: "+String(pitch));
+	Serial.println("BNO IMU z-rot: "+String(roll));
+
+	if(bno.isFullyCalibrated()){
+		
+	} else {
+		Serial.println("BNO Not fully calibrated");
+	}
+	*/
 
 	imu::Vector<3> magneto = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
 	int magx = magneto.x();
@@ -63,21 +90,25 @@ void BNO055::updateMeasure(){
 	accel[1]= -accy*0.01;
 	accel[2]= accz*0.01;
 
-
-  if(!bno.begin())
-  {
-rot[0]= 1;
-rot[1]= 2;
-	rot[2]= 3;
-}else{
-rot[0]= rotx;
+	rot[0]= rotx;
 	rot[1]= roty;
 	rot[2]= rotz;
-}
+
 
 	
-
+	
 	heading = angles[0];
+	/*
+	uint8_t system, d_gyro, d_accel, d_magneto = 0;
+	bno.getCalibration(&system, &d_gyro, &d_accel, &d_magneto);
+	Serial.print(" Gyro=");
+	Serial.print(d_gyro, DEC);
+	Serial.print(" Accel=");
+	Serial.print(d_accel, DEC);
+	Serial.print(" Mag=");
+	Serial.println(d_magneto, DEC);
+	*/
+	delay(BNO055_SAMPLERATE_DELAY_MS);
 
 /* PREVIOUS SETUP / ORIGINAL CODE HERE
 

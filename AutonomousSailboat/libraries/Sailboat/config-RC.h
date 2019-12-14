@@ -13,25 +13,12 @@
 #define RC_5 4
 #define RC_6 5
 
-/*
-//Analog
 #define RC_PIN_1 A8
-#define RC_PIN_5 A9
+#define RC_PIN_2 A9
 #define RC_PIN_3 A10
 #define RC_PIN_4 A11
-#define RC_PIN_2 A12
+#define RC_PIN_5 A12
 #define RC_PIN_6 A13
-
-*/
-//Digital
-#define RC_PIN_1 3
-#define RC_PIN_2 5
-#define RC_PIN_3 7
-#define RC_PIN_4 4
-#define RC_PIN_5 6
-#define RC_PIN_6 8
-
-
 
 //RC Config
 #ifdef FLYSKY
@@ -94,6 +81,7 @@
 #define RC_AUTO		RC_2
 #endif
 
+//Our transmitter
 #ifdef TARANIS_Q_X7
 #define RC_NUM_CHANNELS 4
 #define RC_1_MIN    911

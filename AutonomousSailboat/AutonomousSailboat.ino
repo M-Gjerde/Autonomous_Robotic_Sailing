@@ -1,6 +1,5 @@
 #include <Sailboat.h>
 #include <Log.h>
-
 #include "ReturnHome.h"
 #include "Standby.h"
 #include "HeaderV.h"
@@ -112,18 +111,27 @@ bool checkIfColdStart() {
 }
 
 void setup() {
+  //for debugging
+ //Serial.begin(115200);
+  Serial.println("Debug mode has begun");
+
+
   Logger::Instance()->MessagesSetup();
+  
 
   nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   nh.subscribe(sub2);
+  
 
   Sailboat::Instance()->init(&nh);
-  delay(100);
+  
+  delay(1000);
 
   setControllers();
-  setRCInterrupts();
+  //setRCInterrupts();
+  
 
 #ifdef WIND_ANEMOMETER_PIN
   attachInterrupt(digitalPinToInterrupt(WIND_ANEMOMETER_PIN), AnemometerReading, FALLING);
@@ -142,16 +150,22 @@ void setup() {
     Sailboat::Instance()->setController(RETURNHOME_CONTROLLER);
     EEPROM.write(1000, 0);
   }
+  
+
+
 
   watchdogSetup();
 
+
+  
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
   //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
-  //GPS* gps = Sailboat::Instance()->getGPS();
+
 }
 
 void loop() {
+  //Serial.println("Debug mode has entered loop");
   wdt_reset();
 
   Sailboat::Instance()->updateSensors();
@@ -159,7 +173,8 @@ void loop() {
   Logger::Instance()->Update();
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
-  
+
+
   nh.spinOnce();
   delay(4);
 }

@@ -21,8 +21,6 @@ class Sensor{
 		unsigned int getRaw(){return value;}
 		
 		unsigned int getPeriod(){return period;}
-		unsigned int value1;
-		unsigned int dataOut;
 	protected:
 		unsigned int value;
 		

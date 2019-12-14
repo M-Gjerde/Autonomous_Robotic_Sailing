@@ -27,8 +27,8 @@
 
 /**********************************************HARDWARE********************************************/
 //RC Transceiver
-//#define HK_TR6
-#define TARANIS_Q_X7
+#define HK_TR6
+//#define TARANIS_Q_X7
 
 //Using Grove Shield or not
 #define SERVO_SHIELD
@@ -37,8 +37,13 @@
 //#define CMPS12_IMU
 //#define XSENS_IMU
 #define BNO055_IMU
+
+//GPS
 #define USE_ARDUINO_GPS
-#define USE_ARDUINO_WIND
+
+//WindSensor
+//#define USE_ARDUINO_WIND
+#define CUSTOM_WIND_VANE
 
 //Enable or disable fusion of IMU and GPS data. This will get better data on the velocity of the boat.
 //#define FUSE_GPS_IMU
