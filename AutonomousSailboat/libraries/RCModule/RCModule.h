@@ -35,11 +35,12 @@ public:
 	void resetArduino(uint8_t channel, uint8_t pin);
 	uint16_t getRawValue(uint8_t channel){if(channel < RC_NUM_CHANNELS) return rc_values[channel];}
 	float getValue(uint8_t channel){if(channel < RC_NUM_CHANNELS) return mapf(rc_values[channel], offsetmin[channel], offsetmax[channel], 0.0, 1.0);}
+	float getMean(uint8_t channel) {if(channel < RC_NUM_CHANNELS) return mapf(prevMean[channel], offsetmin[channel], offsetmax[channel], 0.0, 1.0);}	
 	bool controlling;
 	
 private:
 	uint16_t counter[6];
-	uint16_t rc_prevValues[6][9];
+	uint16_t rc_prevValues[6][5];
 	uint16_t prevMean[6];
 	uint16_t rc_values[6];
 	uint32_t rc_start[6];

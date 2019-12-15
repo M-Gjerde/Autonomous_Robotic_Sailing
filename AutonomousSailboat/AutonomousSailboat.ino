@@ -49,12 +49,12 @@ void intCH1() {
 }
 
 void intCH2() {
-    Serial.println("CH 2 is interrupted");
-  //Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_2);
+  //Serial.println("CH 2 is interrupted");
+  Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_2);
 }
 
 void intCH3() {
-    Serial.println("CH 3 is interrupted");
+  Serial.println("CH 3 is interrupted");
   //Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_3);
 }
 
@@ -116,26 +116,26 @@ bool checkIfColdStart() {
 
 void setup() {
   //for debugging
-  Serial.begin(115200);
+  //Serial.begin(115200);
   Serial.println("Debug mode has begun");
 
 
   Logger::Instance()->MessagesSetup();
-  
+
 
   nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   nh.subscribe(sub2);
-  
+
 
   Sailboat::Instance()->init(&nh);
-  
+
   delay(1000);
 
   setControllers();
   setRCInterrupts();
-  
+
 
 #ifdef WIND_ANEMOMETER_PIN
   attachInterrupt(digitalPinToInterrupt(WIND_ANEMOMETER_PIN), AnemometerReading, FALLING);
@@ -154,14 +154,14 @@ void setup() {
     Sailboat::Instance()->setController(RETURNHOME_CONTROLLER);
     EEPROM.write(1000, 0);
   }
-  
+
 
 
 
   watchdogSetup();
 
 
-  
+
   if (LOGGER)
     Logger::Instance()->Toast("Sailboat is", "Ready!!", 0);
   //Sailboat::Instance()->publishMsg(String("Sailboat is Ready! Version : ") + String(VERSION_ARDUINO));
@@ -170,11 +170,14 @@ void setup() {
 
 void loop() {
   //Serial.println("Debug mode has entered loop");
+
   wdt_reset();
+
 
   Sailboat::Instance()->updateSensors();
   //Sailboat::Instance()->updateTestSensors();
   Logger::Instance()->Update();
+
   Sailboat::Instance()->communicateData();
   Sailboat::Instance()->Control();
 

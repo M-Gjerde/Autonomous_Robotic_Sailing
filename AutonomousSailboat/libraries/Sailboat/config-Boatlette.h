@@ -27,8 +27,8 @@
 
 /**********************************************HARDWARE********************************************/
 //RC Transceiver
-#define HK_TR6
-//#define TARANIS_Q_X7
+//#define HK_TR6
+#define TARANIS_Q_X7
 
 //Using Grove Shield or not
 #define SERVO_SHIELD
@@ -71,13 +71,17 @@
 #define RUDDER_MAX  45
 
 //SAIL
-#define SAIL_MIN 0
+#define SAIL_MIN -90
 #define SAIL_MAX 90
 #define SAIL_NEUTRAL SAIL_MAX
 
-#define WINCH_ANGLE_MIN 234
-#define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN
-#define WINCH_ANGLE_MAX 91
+//#define WINCH_ANGLE_MIN 234
+//#define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MIN
+//#define WINCH_ANGLE_MAX 91
+//#define WINCH_DIAMETER 30 // in mm
+#define WINCH_ANGLE_MIN 225
+#define WINCH_ANGLE_MAX 99
+#define WINCH_ANGLE_NEUTRAL WINCH_ANGLE_MAX
 #define WINCH_DIAMETER 30 // in mm
 
 #endif

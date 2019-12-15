@@ -15,7 +15,7 @@
 
 //#define RC_PIN_1 A8
 #define RC_PIN_1 A9
-#define RC_PIN_2 A4
+#define RC_PIN_2 A11
 #define RC_PIN_3 A2
 #define RC_PIN_4 A15
 #define RC_PIN_5 A6
@@ -85,10 +85,10 @@
 //Our transmitter
 #ifdef TARANIS_Q_X7
 #define RC_NUM_CHANNELS 4
-#define RC_1_MIN    990
-#define RC_1_MAX    2014
-#define RC_2_MIN    983
-#define RC_2_MAX    1999
+#define RC_1_MIN    991
+#define RC_1_MAX    2005
+#define RC_2_MIN    990
+#define RC_2_MAX    1930
 #define RC_3_MIN    983
 #define RC_3_MAX    2001
 #define RC_4_MIN    912

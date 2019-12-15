@@ -55,7 +55,7 @@ class Servo_Motor : public ActuatorROS{
 		unsigned int pwmNeutral;
 		unsigned int pwmMin;
 		unsigned int pwmMax;
-		unsigned int lastPwm;
+		float lastPwm;
 		float anglemin;
 		float anglemax;
 };
