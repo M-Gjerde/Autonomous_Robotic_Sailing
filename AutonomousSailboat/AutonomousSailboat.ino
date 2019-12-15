@@ -44,19 +44,23 @@ void setControllers() {
 }
 
 void intCH1() {
+  //Serial.println("CH 1 is interrupted");
   Sailboat::Instance()->getRC()->interruptCH(RC_1, RC_PIN_1);
 }
 
 void intCH2() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_2);
+    Serial.println("CH 2 is interrupted");
+  //Sailboat::Instance()->getRC()->interruptCH(RC_2, RC_PIN_2);
 }
 
 void intCH3() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_3);
+    Serial.println("CH 3 is interrupted");
+  //Sailboat::Instance()->getRC()->interruptCH(RC_3, RC_PIN_3);
 }
 
 void intCH4() {
-  Sailboat::Instance()->getRC()->interruptCH(RC_4, RC_PIN_4);
+  //Serial.println("interrupt ch4 called");
+  Sailboat::Instance()->getRC()->resetArduino(RC_4, RC_PIN_4);
 }
 
 void intCH5() {
@@ -112,7 +116,7 @@ bool checkIfColdStart() {
 
 void setup() {
   //for debugging
- //Serial.begin(115200);
+  Serial.begin(115200);
   Serial.println("Debug mode has begun");
 
 
@@ -130,7 +134,7 @@ void setup() {
   delay(1000);
 
   setControllers();
-  //setRCInterrupts();
+  setRCInterrupts();
   
 
 #ifdef WIND_ANEMOMETER_PIN

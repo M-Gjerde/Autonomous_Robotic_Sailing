@@ -108,8 +108,7 @@ void WindSensor::communicateData(){
 	msg.y = windSpeed*sin(angle);
 #endif
 	msg.theta = angle;
-
-	Serial.println("Wind Vane Angle: " + String(msg.theta));
+	//Serial.println("Wind vane angle: " + String(msg.theta));
 
 	pub.publish(&msg);
 }

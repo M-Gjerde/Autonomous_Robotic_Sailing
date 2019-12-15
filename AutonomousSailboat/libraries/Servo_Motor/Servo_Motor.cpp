@@ -1,4 +1,5 @@
 #include <Servo_Motor.h>
+#include <Sailboat.h>
 
 void Servo_Motor::init(ros::NodeHandle* n){
 	motorSetup();
@@ -15,7 +16,15 @@ void Servo_Motor::applyCommand(double command){
         command = anglemax;
     if(command < anglemin)
         command = anglemin;
+	if (anglemax > 45.00) {
+		Sailboat::Instance()->publishMsg(String("From Sail : 		anglemax: ") + String(anglemax) + String(", angemlin: ") + String(anglemin) + String(", command: ") + String(command));
+		//Serial.println("Sail:		angleMax: " + String(anglemax) + ", angleMin: " + String(anglemin) + ", command: " + String(command));
+	} else {
+		Sailboat::Instance()->publishMsg(String("From Rudder : 		anglemax: ") + String(anglemax) + String(", angemlin: ") + String(anglemin) + String(", command: ") + String(command));
+		Serial.println("Rudder:		angleMax: " + String(anglemax) + ", angleMin: " + String(anglemin) + ", command: " + String(command));
+	}
 
+	
 	// Generates the exact command:
 	commandExact = mapf(command, anglemin, anglemax, pwmMin, pwmMax);
 //	Logger::Log(0, F("MotorCommandExact"), String(commandExact));

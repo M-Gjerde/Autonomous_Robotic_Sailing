@@ -13,6 +13,7 @@ void RCControl::Control(const geometry_msgs::Twist& cmd) {
   float sail = Sailboat::Instance()->getRC()->getValue(RC_SAIL);
   float rudder = Sailboat::Instance()->getRC()->getValue(RC_RUDDER);
   float autoCh = Sailboat::Instance()->getRC()->getValue(RC_AUTO);
+  //Serial.println("Sail: " + String(sail) + ", rudder: " + String(rudder));
   Sailboat::Instance()->getRudder()->applyCommand(-(rudder-0.5)*2.0*RUDDER_MAX);
   if(autoCh < 0.5){
     Sailboat::Instance()->getSail()->applyCommand((sail-0.5)*2.0*SAIL_MAX);
