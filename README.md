@@ -9,3 +9,6 @@ Link to the other repositories: [ROS Repository](https://github.com/H8ste/SailBo
 * Added TARANIS_Q_X7 transmitter to *config-RC.h*
 * Configured *sailboat.h*, *sailboat.cpp*, 
 * Changed *RCControl.cpp* to fit our new transmitter.
+
+
+##Continued by Group 462 by 4th semester robotics stuedents 
